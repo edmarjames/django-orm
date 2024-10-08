@@ -1,7 +1,31 @@
-{{posts}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django ORM</title>
+</head>
+<body>
+    {% if posts %}
+        <h4>Using "Q" objects together with the "|" symbol as OR</h4>
+        <p>{{posts}}</p>
+    {% endif %}
+
+    {% if not_posts %}
+        <h4>Using tilde symbol "~" as not together with the "Q" object</h4>
+        <p>{{not_posts}}</p>
+    {% endif %}
+
+    {% if and_post %}
+        <h4>Using "Q" objects together with the "&" symbol as AND</h4>
+        <p>{{and_post}}</p>
+    {% endif %}
+
+    <!-- Part 5 -->
+    <!-- {% for i in x %}
+        <div>{{ i.firstname }} {{ i.surname }}</div>
+    {% endfor %} -->
+</body>
+</html>
 
 
-<!-- Part 5 -->
-<!-- {% for i in x %}
-    <div>{{ i.firstname }} {{ i.surname }}</div>
-{% endfor %} -->

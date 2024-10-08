@@ -21,16 +21,39 @@ def student_list_(request):
     return render(request, 'output.html', {'posts':posts})
 
 def student_list(request):
-    # This query using the "|" symbol as "OR"
+    # This query use the "|" symbol as "OR"
     # posts = Student.objects.filter(surname__startswith='Bautista') | Student.objects.filter(surname__startswith='Doe')
 
     # It can be simplified using "Q" objects together with the "|" symbol as OR
     posts = Student.objects.filter(Q(surname__startswith='Bautista') | Q(surname__startswith='Doe'))
 
     # Use can use tilde symbol "~" as not together with the "Q" object
-    # posts = Student.objects.filter(Q(surname__startswith='Bautista') | ~Q(surname__startswith='Doe'))
+    not_posts = Student.objects.filter(Q(surname__startswith='Bautista') | ~Q(surname__startswith='Doe'))
+
+    context = {
+        'posts':posts,
+        'not_posts': not_posts
+    }
 
     print(posts)
     print(connection.queries)
 
-    return render(request, 'output.html', {'posts':posts})
+    return render(request, 'output.html', context)
+
+# Part 3
+#################################################################
+def student_list_and(request):
+    # This query use the "&" symbol as "AND"
+    # and_post = Student.objects.filter(classroom=3) & Student.objects.filter(firstname__startswith='Jane')
+
+    # It can be simplified using "Q" objects together with the "&" symbol as AND
+    and_post = Student.objects.filter(Q(classroom=3) & Q(firstname__startswith='Jane'))
+
+    context = {
+        'and_post':and_post
+    }
+
+    print(and_post)
+    print(connection.queries)
+
+    return render(request, 'output.html', context)
