@@ -79,3 +79,22 @@ def student_list_union(request):
     }
 
     return render(request, "output.html", context)
+
+
+# Part 5
+#################################################################
+def student_list_not(request):
+    # You can use exclude and "&" symbol to create complex not query
+    # not_post = Student.objects.exclude(surname__startswith="Bautista") & Student.objects.exclude(age__gt=23)
+
+    # You can also simplify it using tilde symbol "~" as NOT together with the "Q" object
+    not_post = Student.objects.filter(~Q(surname__startswith="Bautista") & ~Q(age__gt=23))
+
+    print(not_post)
+    print(connection.queries)
+
+    context = {
+        "not_post": not_post
+    }
+
+    return render(request, "output.html", context)
