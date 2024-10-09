@@ -45,6 +45,17 @@
         {% endfor %}
     {% endif %}
 
+    <h4>Performing raw SQL queries without using ORM</h4>
+    {% if raw_sql_count %}
+        <p>{{raw_sql_count}}</p>
+    {% endif %}
+
+    {% if raw_sql_count %}
+        {% for i in raw_sql_count %}
+            <div>{{ i.firstname }} - {{ i.age }}</div>
+        {% endfor %}
+    {% endif %}
+
 </body>
 </html>
 

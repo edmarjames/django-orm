@@ -133,3 +133,36 @@ def student_list_raw(request):
     }
 
     return render(request, "output.html", context)
+
+
+# Part 8 Simple Bypassing ORM
+#################################################################
+def dict_fetchall(cursor):
+    """Helper function for converting the result of query to a dict"""
+    desc = cursor.description
+    return [
+        dict(zip([col[0] for col in desc], row))
+        for row in cursor.fetchall()
+    ]
+
+def student_list_raw_sql(request):
+    # This will allow you to use the cursor object
+    cursor = connection.cursor()
+
+    # This is where you define your SQL query
+    cursor.execute("SELECT * FROM student_student WHERE age > 23")
+
+    # Output the data using helper function
+    r = dict_fetchall(cursor)
+
+    # Alternative method
+    # r = cursor.fetchall()
+
+    print(r)
+    print(connection.queries)
+
+    context = {
+        "raw_sql_count": r
+    }
+
+    return render(request, "output.html", context)
