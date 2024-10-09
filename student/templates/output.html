@@ -31,10 +31,15 @@
         <p>{{not_post}}</p>
     {% endif %}
 
+    {% if select_post %}
+        <h4>Using "only" to get specific fields</h4>
+         {% for i in select_post %}
+            <div>{{ i.firstname }} - {{ i.age }}</div>
+        {% endfor %}
+    {% endif %}
+
     <!-- Part 5 -->
-    <!-- {% for i in x %}
-        <div>{{ i.firstname }} {{ i.surname }}</div>
-    {% endfor %} -->
+
 </body>
 </html>
 

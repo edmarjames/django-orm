@@ -98,3 +98,19 @@ def student_list_not(request):
     }
 
     return render(request, "output.html", context)
+
+
+# Part 6 Select & Output Individual Fields
+#################################################################
+def student_list_select(request):
+    # Use "only" to get specific fields from the table
+    select_post = Student.objects.filter(classroom=1).only("firstname", "age")
+
+    print(select_post)
+    print(connection.queries)
+
+    context = {
+        "select_post": select_post
+    }
+
+    return render(request, "output.html", context)
