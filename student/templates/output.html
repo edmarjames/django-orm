@@ -38,7 +38,12 @@
         {% endfor %}
     {% endif %}
 
-    <!-- Part 5 -->
+    {% if raw_post %}
+        <h4>Using "raw" to perform raw SQL queries</h4>
+        {% for i in raw_post %}
+            <div>{{ i }}</div>
+        {% endfor %}
+    {% endif %}
 
 </body>
 </html>

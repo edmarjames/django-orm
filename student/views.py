@@ -114,3 +114,22 @@ def student_list_select(request):
     }
 
     return render(request, "output.html", context)
+
+
+# Part 7 Raw SQL queries
+#################################################################
+def student_list_raw(request):
+    # Using Django ORM
+    # all_post = Student.objects.all()
+
+    # Using "raw" to perform raw sql queries
+    raw_post = Student.objects.raw("SELECT * FROM student_student WHERE age=26")
+
+    print(raw_post)
+    print(connection.queries)
+
+    context = {
+        "raw_post": raw_post
+    }
+
+    return render(request, "output.html", context)
