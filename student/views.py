@@ -2,9 +2,13 @@ from .models import (
     Student,
     Teacher
 )
-from django.db import connection
+from django.db import (
+    connection,
+    transaction
+)
 from django.db.models import Q
 from django.shortcuts import render
+from .forms import ClassroomUpdateForm
 
 
 # Part 2
@@ -163,6 +167,44 @@ def student_list_raw_sql(request):
 
     context = {
         "raw_sql_count": r
+    }
+
+    return render(request, "output.html", context)
+
+def student_list_atomic(request):
+    all_student = Student.objects.all()
+    students = []
+    error = ""
+
+    print(all_student)
+    print(connection.queries)
+
+    if request.method == "POST":
+        form = ClassroomUpdateForm(request.POST)
+
+        if form.is_valid() == True:
+            student_one = form.cleaned_data["studentone"]
+            student_two = form.cleaned_data["studenttwo"]
+            classroom = form.cleaned_data["classroom"]
+
+            students = [student_one, student_two]
+        else:
+            form = ClassroomUpdateForm()
+
+    if students:
+        try:
+            # Used transaction.atomic to guarantee that either all of the transaction succeeds or none of it does.
+            with transaction.atomic():
+                for student in students:
+                    student_record = Student.objects.get(firstname=student.title())
+                    student_record.classroom = classroom
+                    student_record.save()
+        except:
+            error = "An exception occurred"
+
+    context = {
+        "all_student": all_student,
+        "error": error
     }
 
     return render(request, "output.html", context)

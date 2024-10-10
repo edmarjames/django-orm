@@ -45,8 +45,8 @@
         {% endfor %}
     {% endif %}
 
-    <h4>Performing raw SQL queries without using ORM</h4>
     {% if raw_sql_count %}
+        <h4>Performing raw SQL queries without using ORM</h4>
         <p>{{raw_sql_count}}</p>
     {% endif %}
 
@@ -56,6 +56,34 @@
         {% endfor %}
     {% endif %}
 
+    <form action="{% url 'student:student_data_atomic' %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="studentone">Name:</label>
+            <input type="text" id="studentone" maxlength="20" name="studentone" value="{{ studentone }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="studenttwo">Name:</label>
+            <input type="text" id="studenttwo" maxlength="20" name="studenttwo" value="{{ studenttwo }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="classroom">Classroom:</label>
+            <input type="number" id="classroom" name="classroom" value="{{ classroom }}" required>
+        </div>
+        <div class="text-center">
+            <input type="submit" value="Save">
+        </div>
+    </form>
+
+    {% if all_student %}
+        {% for i in all_student %}
+            <div>{{ i.firstname }} {{ i.surname }} - Classroom {{ i.classroom }}</div>
+        {% endfor %}
+    {% endif %}
+
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
 </body>
 </html>
 
