@@ -82,3 +82,8 @@ class ItemC(BaseItem):
 
 class ItemD(BaseItem):
     slug = models.SlugField(max_length=255, unique=True)
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=255, null=True, blank=True)
+    price = models.IntegerField(null=True, blank=True)

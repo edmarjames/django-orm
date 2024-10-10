@@ -1,12 +1,19 @@
 from .models import (
+    Product,
     Student,
-    Teacher
+    Teacher,
 )
 from django.db import (
     connection,
     transaction
 )
-from django.db.models import Q
+from django.db.models import (
+    Avg,
+    Max,
+    Min,
+    Q,
+    Sum,
+)
 from django.shortcuts import render
 from .forms import ClassroomUpdateForm
 
@@ -171,6 +178,9 @@ def student_list_raw_sql(request):
 
     return render(request, "output.html", context)
 
+
+# Part 13 Transaction Atomicity
+#################################################################
 def student_list_atomic(request):
     all_student = Student.objects.all()
     students = []
@@ -205,6 +215,23 @@ def student_list_atomic(request):
     context = {
         "all_student": all_student,
         "error": error
+    }
+
+    return render(request, "output.html", context)
+
+
+# Part 15 Aggregation
+#################################################################
+def student_list_aggregate(request):
+
+    product_data = Product.objects.aggregate(total=Sum("price"), mini=Min("price"),
+                                             maxi=Max("price"), aveg=Avg("price"))
+
+    print(product_data)
+    print(connection.queries)
+
+    context = {
+        "product_data": product_data,
     }
 
     return render(request, "output.html", context)
