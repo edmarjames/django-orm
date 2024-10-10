@@ -18,7 +18,7 @@ from django.shortcuts import render
 from .forms import ClassroomUpdateForm
 
 
-# Part 2
+# Part 2 OR query
 #################################################################
 def student_list_(request):
 
@@ -56,7 +56,7 @@ def student_list(request):
     return render(request, "output.html", context)
 
 
-# Part 3
+# Part 3 AND query
 #################################################################
 def student_list_and(request):
     # This query use the "&" symbol as "AND"
@@ -75,7 +75,7 @@ def student_list_and(request):
     return render(request, "output.html", context)
 
 
-# Part 4
+# Part 4 UNION query
 #################################################################
 def student_list_union(request):
     # Union is used to combine the results of two select query
@@ -92,7 +92,7 @@ def student_list_union(request):
     return render(request, "output.html", context)
 
 
-# Part 5
+# Part 5 NOT query
 #################################################################
 def student_list_not(request):
     # You can use exclude and "&" symbol to create complex not query
