@@ -12,5 +12,6 @@ urlpatterns = [
     path('raw/', views.student_list_raw, name='student_data_raw'),
     path('raw_sql/', views.student_list_raw_sql, name='student_data_raw_sql'),
     path('atomic/', views.student_list_atomic, name='student_data_atomic'),
-    path('aggregate/', views.student_list_aggregate, name='student_data_aggregate')
+    path('aggregate/', views.student_list_aggregate, name='student_data_aggregate'),
+    path('delete/', views.student_delete, name='student_data_delete')
 ]

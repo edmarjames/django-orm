@@ -91,6 +91,27 @@
         <h4>The highest price is {{ product_data.maxi }}</h4>
         <h4>The average price is {{ product_data.aveg }}</h4>
     {% endif %}
+
+    {% if all_student_rows %}
+        <form action="{% url 'student:student_data_delete' %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="studentid">Student ID:</label>
+                <input type="number" id="studentid" name="studentid" value="{{ studentid }}" required>
+            </div>
+            <div class="text-center">
+                <input type="submit" value="Delete">
+            </div>
+        </form>
+
+        {% for i in all_student_rows %}
+            <div>{{ i.id }} - {{ i.firstname }} {{ i.surname }} - Classroom {{ i.classroom }}</div>
+        {% endfor %}
+    {% endif %}
+
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
 </body>
 </html>
 

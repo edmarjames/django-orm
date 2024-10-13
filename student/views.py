@@ -15,7 +15,10 @@ from django.db.models import (
     Sum,
 )
 from django.shortcuts import render
-from .forms import ClassroomUpdateForm
+from .forms import (
+    ClassroomUpdateForm,
+    DeleteStudentForm
+)
 
 
 # Part 2 OR query
@@ -232,6 +235,32 @@ def student_list_aggregate(request):
 
     context = {
         "product_data": product_data,
+    }
+
+    return render(request, "output.html", context)
+
+
+def student_delete(request):
+
+    all_student_rows = Student.objects.all()
+    message = ""
+
+    if request.method == "POST":
+        form = DeleteStudentForm(request.POST)
+
+        if form.is_valid() == True:
+            studentid = form.cleaned_data["studentid"]
+            try:
+                Student.objects.get(pk=studentid).delete()
+                message = "Successfully deleted"
+            except:
+                message = "Something went wrong"
+        else:
+            form = DeleteStudentForm()
+
+    context = {
+        "all_student_rows": all_student_rows,
+        "message": message
     }
 
     return render(request, "output.html", context)
