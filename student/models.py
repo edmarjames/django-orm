@@ -84,6 +84,45 @@ class ItemD(BaseItem):
     slug = models.SlugField(max_length=255, unique=True)
 
 
+# Foreign key deletion contstraint
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+class Manufacturer(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+class Warranty(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     price = models.IntegerField(null=True, blank=True)
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL, related_name="product_category")
+    manufacturer = models.ForeignKey(Manufacturer, null=True, blank=True, on_delete=models.CASCADE, related_name="product_manufacturer")
+    warranty = models.ForeignKey(Warranty, null=True, blank=True, on_delete=models.PROTECT, related_name="product_warranty")
+
+    def __str__(self):
+        return f"{self.name} - {self.category}"
+
+# Using SET_NULL will set the value of the "category "field to null if the value of the foreignKey is deleted on the parent table.
+
+# Using SET_DEFAULT will set the value of the field to the set default value when the foreignKey is deleted.
+
+# Using CASCADE will also delete the value of "manufacturer" when the foreignKey is deleted.
+
+# using PROTECT will not allow the deletion of foreignKey unless the related objects are already deleted.
+
+# using RESTRICT is the same with PROTECT.
+
+# using SET will set the value of the field based on the returned value of the function you specify to use.
+
+# using DO_NOTHING will do nothing if the foreignKey is deleted.
